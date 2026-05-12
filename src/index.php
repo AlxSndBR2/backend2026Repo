@@ -1,102 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visão Geral - Equilibra</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Bem-vindo ao Equilibra</title>
+    <style>
+        /* Estilos da Tela de Entrada */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* Degradê moderno: Azul escuro para um verde água (focado em finanças) */
+           background: linear-gradient(135deg, #ffffff 0%, #4f46e5 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn-entrar {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color:#4f46e5;
+            background-color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-entrar:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
-<body class="layout-dashboard">
+<body>
 
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <img src="logoEquilibra.PNG" alt="Logo Equilibra" class="logo-sidebar">
-            Equilibra
-        </div>
-
-        <nav class="sidebar-menu">
-            <!-- Visão Geral ganha a classe 'ativo' -->
-            <a href="index.php" class="menu-item ativo"><span>㗊</span> Visão Geral</a>
-            <a href="relatorios.php" class="menu-item"><span>⏱️</span> Relatórios</a>
-            <a href="configuracoes.php" class="menu-item"><span>⚙️</span> Configurações</a>
-        </nav>
-        </nav>
-
-        <div class="sidebar-footer">
-            <button class="btn-tema">🌙 Escuro</button>
-            <div class="usuario-info">
-                <div class="avatar">A</div>
-                <div class="dados-usuario">
-                    <strong>Admin</strong>
-                    <a href="login.php" class="link-sair">Sair</a>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <main class="main-content">
+    <div class="container">
+        <h1>Equilibra</h1>
+        <p>Sua vida financeira em perfeita harmonia.</p>
         
-        <header class="top-header">
-            <h1>Visão Geral</h1>
-            <a href="nova_transacao.php" class="btn-primario">+ Nova Transação</a>
-        </header>
+        <a href="dashboard.php" class="btn-entrar">Acessar Meu Painel</a>
+    </div>
 
-        <section class="cards-resumo">
-            <div class="card">
-                <div class="card-titulo">Entradas <span class="icone-verde">↑</span></div>
-                <div class="card-valor valor-verde">R$ 11.200,00</div>
-            </div>
-            <div class="card">
-                <div class="card-titulo">Saídas <span class="icone-vermelho">↓</span></div>
-                <div class="card-valor valor-vermelho">R$ 10.357,00</div>
-            </div>
-            <div class="card">
-                <div class="card-titulo">Saldo Total <span class="icone-cinza">$</span></div>
-                <div class="card-valor valor-neutro">R$ 843,00</div>
-            </div>
-        </section>
-
-        <section class="secao-transacoes">
-            <h3 class="titulo-secao">Últimas Transações</h3>
-            
-            <div class="lista-transacoes">
-                
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <strong>Freelance</strong>
-                        <span>2025-11-30</span>
-                    </div>
-                    <div class="info-direita">
-                        <span class="valor-verde">+ R$ 200,00</span>
-                        <a href="#" class="btn-lixeira">🗑️</a>
-                    </div>
-                </div>
-
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <strong>Outras Despesas</strong>
-                        <span>2025-11-28</span>
-                    </div>
-                    <div class="info-direita">
-                        <span class="valor-vermelho">- R$ 7.000,00</span>
-                        <a href="#" class="btn-lixeira">🗑️</a>
-                    </div>
-                </div>
-
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <strong>Compras</strong>
-                        <span>2025-11-27</span>
-                    </div>
-                    <div class="info-direita">
-                        <span class="valor-vermelho">- R$ 150,00</span>
-                        <a href="#" class="btn-lixeira">🗑️</a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
 </body>
 </html>
