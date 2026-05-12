@@ -1,0 +1,600 @@
+/* 1. Reset básico para tirar margens indesejadas */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 2. Fundo da tela com degradê: centraliza tudo e ajusta a cor */
+        body {
+            /* Aqui está a mágica do degradê */
+            background: linear-gradient(135deg, #ffffff 0%, #4f46e5 100%);
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 3. O Cartão branco principal */
+        .login-card {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* 4. Título e Logo lado a lado */
+        .titulo-logo {
+            display: flex;
+            align-items: center; /* Centraliza a imagem e o texto verticalmente */
+            justify-content: center; /* Mantém tudo no meio do cartão */
+            gap: 12px; /* Espaço entre a logo e a palavra "Equilibra" */
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        /* Controla o tamanho da sua imagem */
+        .logo-img {
+            width: 120px; /* Aumente ou diminua esse número para ajustar o tamanho da sua logo */
+            height: auto;
+        }
+        .login-card p {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* 5. Alinhamento dos campos de texto */
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            color: #34495e;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        /* Efeito de brilho quando clica no input */
+        .input-group input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* 6. Botão de Entrar */
+        .btn-entrar {
+            width: 100%;
+            padding: 14px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        .btn-entrar:hover {
+            background-color: #2980b9;
+        }
+
+        /* 7. Link para cadastro */
+        .link-cadastro {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .link-cadastro a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .link-cadastro a:hover {
+            text-decoration: underline;
+        }
+
+       /* =========================================
+   NOVO LAYOUT DASHBOARD (ESTILO APLICATIVO)
+========================================= */
+
+/* Fundo geral da página */
+body.layout-dashboard {
+    background: #f0f0f0; /* Essa mudança tira o degradê e força a cor sólida */
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Fica travada na esquerda */
+    left: 0;
+    top: 0;
+}
+
+.sidebar-logo {
+    padding: 25px 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #4f46e5; /* Roxo principal */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icone-logo { font-size: 26px; }
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 5px;
+    flex: 1; /* Empurra o footer para baixo */
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #64748b;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: 0.2s;
+}
+
+.menu-item:hover { background-color: #f8fafc; }
+
+/* Item selecionado (Visão Geral) */
+.menu-item.ativo {
+    background-color: #eef2ff;
+    color: #4f46e5;
+    font-weight: bold;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.btn-tema {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    color: #64748b;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    background-color: #c7d2fe;
+    color: #4f46e5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.dados-usuario strong {
+    display: block;
+    color: #0f172a;
+    font-size: 14px;
+}
+
+.link-sair {
+    color: #ef4444;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+/* ================= ÁREA PRINCIPAL ================= */
+.main-content {
+    margin-left: 250px; /* Deixa o espaço da sidebar */
+    padding: 40px;
+    width: calc(100% - 250px);
+    box-sizing: border-box;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.top-header h1 {
+    color: #0f172a;
+    font-size: 28px;
+}
+
+.btn-primario {
+    background-color: #4f46e5;
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-primario:hover { background-color: #4338ca; }
+
+/* ================= CARTÕES DE RESUMO ================= */
+.cards-resumo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.card-titulo {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-valor {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ================= LISTA DE TRANSAÇÕES ================= */
+.titulo-secao {
+    color: #0f172a;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.lista-transacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-transacao {
+    background-color: #ffffff;
+    padding: 18px 25px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e2e8f0;
+}
+
+.info-esquerda strong {
+    display: block;
+    color: #0f172a;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.info-esquerda span {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.info-direita {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.info-direita span {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.btn-lixeira {
+    text-decoration: none;
+    font-size: 16px;
+    color: #ef4444;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.btn-lixeira:hover { opacity: 1; transform: scale(1.1); }
+
+/* ================= CORES DO SISTEMA ================= */
+.valor-verde { color: #10b981; }
+.valor-vermelho { color: #ef4444; }
+.valor-neutro { color: #0f172a; }
+.icone-verde { color: #10b981; }
+.icone-vermelho { color: #ef4444; }
+.icone-cinza { color: #64748b; }
+/* Tamanho da logo na barra lateral */
+.logo-sidebar {
+    width: 90px; /* Pode aumentar ou diminuir esse número até ficar do seu gosto */
+    height: auto;
+}
+
+/* ================= PÁGINA DE RELATÓRIOS ================= */
+.painel-relatorios {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.tabela-responsiva {
+    overflow-x: auto; /* Permite rolar para o lado no celular */
+}
+
+.tabela-moderna {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabela-moderna th, 
+.tabela-moderna td {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.tabela-moderna th {
+    color: #64748b;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tabela-moderna td {
+    color: #334155;
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.tabela-moderna tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges (Etiquetas) de Tipo */
+.badge-tipo {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-tipo.receita {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.badge-tipo.despesa {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Botões de Ação na Tabela */
+.btn-acao {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 8px;
+    transition: 0.2s;
+    display: inline-block;
+}
+
+.btn-editar {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+}
+
+.btn-editar:hover {
+    background-color: #c7d2fe;
+}
+
+.btn-excluir {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.btn-excluir:hover {
+    background-color: #fecaca;
+}
+/* ================= PÁGINA DE CONFIGURAÇÕES ================= */
+.grid-configuracoes {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 700px; /* Limita a largura para o formulário não ficar esticado na tela inteira */
+}
+
+/* Aproveitamos a classe .painel-form e os .input-group que já existem, 
+   mas criamos os estilos da Zona de Perigo */
+
+.zona-perigo {
+    border: 1px solid #fca5a5;
+    background-color: #fef2f2;
+}
+
+.zona-perigo h3 {
+    color: #dc2626;
+    border-bottom-color: #fecaca;
+}
+
+.zona-perigo p {
+    color: #7f1d1d;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.btn-perigo {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-perigo:hover {
+    background-color: #dc2626;
+}
+
+/* Reajuste para inputs padronizados que usaremos nas configurações */
+.painel-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-bottom: 5px;
+    transition: border-color 0.3s;
+}
+
+.painel-form input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+/* ================= PÁGINA DE NOVA TRANSAÇÃO ================= */
+
+/* Centraliza o formulário para não ocupar a tela toda */
+.container-centralizado {
+    max-width: 600px;
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Coloca dois inputs na mesma linha */
+.row-inputs {
+    display: flex;
+    gap: 20px;
+}
+
+.row-inputs .input-group {
+    flex: 1; /* Faz ambos dividirem o espaço 50/50 */
+}
+
+/* Ajuste do <select> para ficar idêntico aos <input> */
+.painel-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-bottom: 5px;
+    background-color: white;
+    transition: border-color 0.3s;
+}
+
+.painel-form select:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Botão de Voltar no topo */
+.btn-voltar {
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.btn-voltar:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+/* Faz o botão principal ocupar 100% da largura no formulário */
+.btn-block {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+/* Ajuste para o formulário de exclusão igual ao do professor */
+.form-excluir {
+    display: inline-block; /* Mantém o botão na mesma linha do botão de editar */
+    margin: 0;
+}
+
+button.btn-excluir {
+    border: none;
+    cursor: pointer;
+    font-family: inherit; /* Puxa a mesma fonte do resto do site */
+}
+/* Alinha os botões de ação lado a lado na tabela */
+.grupo-acoes {
+    display: flex;
+    gap: 8px; /* Dá um espacinho entre os botões */
+    align-items: center;
+}
+
+/* Garante que o formulário não quebre a linha */
+.form-excluir {
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove as bordas feias do botão e mantém a mesma fonte */
+button.btn-acao {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    /* Se precisar, ajustamos a altura para ficar igual ao link */
+    height: 100%; 
+}
