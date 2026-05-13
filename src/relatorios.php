@@ -1,3 +1,19 @@
+<?php
+require_once 'conecta.php';
+
+// Busca todas as transações da mais recente para a mais antiga
+$transacoes = $pdo->query("SELECT * FROM transacoes ORDER BY data_transacao DESC")->fetchAll();
+
+// Sistema de Mensagens do Professor
+$status = $_GET['msg'] ?? '';
+$mensagens = [
+    'sucesso' => 'Ação realizada com sucesso!',
+    'excluido' => 'Transação removida do sistema.',
+    'editado' => 'Transação atualizada com sucesso.',
+    'erro' => 'Erro ao processar solicitação.',
+    'tabela_pronta' => 'Banco de dados configurado!'
+];
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -16,11 +32,10 @@
         </div>
 
         <nav class="sidebar-menu">
-            <a href="index.php" class="menu-item"><span>㗊</span> Visão Geral</a>
+            <a href="dashboard.php" class="menu-item"><span>㗊</span> Visão Geral</a>
             <!-- Relatórios ganha a classe 'ativo' -->
             <a href="relatorios.php" class="menu-item ativo"><span>⏱️</span> Relatórios</a>
             <a href="configuracoes.php" class="menu-item"><span>⚙️</span> Configurações</a>
-        </nav>
         </nav>
 
         <div class="sidebar-footer">
@@ -29,7 +44,7 @@
                 <div class="avatar">A</div>
                 <div class="dados-usuario">
                     <strong>Admin</strong>
-                    <a href="login.php" class="link-sair">Sair</a>
+                    <!-- Retirei o botão de Sair daqui, já que removemos o sistema de login -->
                 </div>
             </div>
         </div>
@@ -45,6 +60,16 @@
 
         <!-- Painel da Tabela -->
         <section class="painel-relatorios">
+
+            <!-- ALERTA DE MENSAGENS (Lógica do professor com estilo inline básico para garantir que apareça) -->
+            <?php if ($status && isset($mensagens[$status])): ?>
+                <div class="alert <?= $status === 'erro' ? 'error' : 'success' ?>" 
+                     style="margin-bottom: 20px; padding: 15px; border-radius: 8px; font-weight: bold; text-align: center;
+                            background-color: <?= $status === 'erro' ? '#f8d7da' : '#d4edda' ?>; 
+                            color: <?= $status === 'erro' ? '#721c24' : '#155724' ?>;">
+                    <?= $mensagens[$status] ?>
+                </div>
+            <?php endif; ?>
             
             <div class="tabela-responsiva">
                 <table class="tabela-moderna">
@@ -59,40 +84,44 @@
                     </thead>
                     <tbody>
                         
-                        <!-- Exemplo 1: Receita -->
+                        <!-- LOOP PHP: Aqui ele repete a linha (<tr>) para cada item no banco -->
+                        <?php foreach($transacoes as $t): ?>
                         <tr>
-                            <td><strong>Freelance</strong></td>
-                            <td>30/11/2026</td>
-                            <td><span class="badge-tipo receita">Receita</span></td>
-                            <td class="valor-verde">R$ 200,00</td>
+                            <td><strong><?= htmlspecialchars($t['categoria']) ?></strong></td>
+                            
+                            <!-- Formata a data para o padrão do Brasil -->
+                            <td><?= date('d/m/Y', strtotime($t['data_transacao'])) ?></td>
+                            
+                            <!-- Usa o IF do PHP para decidir a cor da tag (Badge) -->
+                            <td>
+                                <?php if ($t['tipo'] === 'receita'): ?>
+                                    <span class="badge-tipo receita">Receita</span>
+                                <?php else: ?>
+                                    <span class="badge-tipo despesa">Despesa</span>
+                                <?php endif; ?>
+                            </td>
+                            
+                            <!-- Usa o IF do PHP para decidir se o texto fica verde ou vermelho -->
+                            <td class="<?= $t['tipo'] === 'receita' ? 'valor-verde' : 'valor-vermelho' ?>">
+                                <?= $t['tipo'] === 'receita' ? '' : '- ' ?>R$ <?= number_format($t['valor'], 2, ',', '.') ?>
+                            </td>
+                            
                             <td>
                                 <div class="grupo-acoes">
-                                    <a href="editar_transacao.php?id=1" class="btn-acao btn-editar">✏️ Editar</a>
+                                    <!-- Botão de Editar pegando o ID dinâmico -->
+                                    <a href="editar_transacao.php?id=<?= $t['id'] ?>" class="btn-acao btn-editar">✏️ Editar</a>
                                     
-                                    <form action="excluir_transacao.php" method="POST" class="form-excluir">
-                                        <input type="hidden" name="id" value="1">
+                                    <!-- Formulário de Excluir do professor, adaptado com o seu botão -->
+                                    <form action="excluir_transacao.php" method="POST" class="form-excluir" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir esta transação?')">
+                                        <!-- O input hidden é um truque para enviar o ID sem bagunçar o CSS do seu botão -->
+                                        <input type="hidden" name="id" value="<?= $t['id'] ?>">
                                         <button type="submit" class="btn-acao btn-excluir">🗑️ Excluir</button>
                                     </form>
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- Exemplo 2: Despesa -->
-                        <tr>
-                            <td><strong>Moradia</strong></td>
-                            <td>28/11/2026</td>
-                            <td><span class="badge-tipo despesa">Despesa</span></td>
-                            <td class="valor-vermelho">- R$ 150,00</td>
-                           <td>
-                                <div class="grupo-acoes">
-                                    <a href="editar_transacao.php?id=1" class="btn-acao btn-editar">✏️ Editar</a>
-                                    
-                                    <form action="excluir_transacao.php" method="POST" class="form-excluir">
-                                        <input type="hidden" name="id" value="1">
-                                        <button type="submit" class="btn-acao btn-excluir">🗑️ Excluir</button>
-                                    </form>
-                                </div>
-                            </td>
+                        <?php endforeach; ?>
+                        <!-- Fim do LOOP -->
 
                     </tbody>
                 </table>

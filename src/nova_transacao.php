@@ -1,3 +1,34 @@
+<?php
+require_once 'conecta.php';
+
+// Verifica se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $stmt = $pdo->prepare("
+            INSERT INTO transacoes 
+            (valor, tipo, data_transacao, categoria) 
+            VALUES (?, ?, ?, ?)
+        ");
+
+        // Executa pegando os names EXATOS dos seus inputs
+        $stmt->execute([
+            $_POST['valor'],
+            $_POST['tipo'],
+            $_POST['data'],       // Pega do seu input name="data"
+            $_POST['categoria']   // Pega do seu novo select de categorias
+        ]);
+
+        // Redireciona para os relatórios com a mensagem de sucesso
+        header("Location: relatorios.php?msg=sucesso");
+        exit;
+
+    } catch (Exception $e) {
+        // Se algo der errado no banco, redireciona com erro
+        header("Location: relatorios.php?msg=erro");
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -16,8 +47,7 @@
         </div>
 
         <nav class="sidebar-menu">
-            <!-- Nenhuma aba fica 'ativa' porque esta é uma tela de ação, não o menu principal -->
-            <a href="index.php" class="menu-item"><span>㗊</span> Visão Geral</a>
+            <a href="dashboard.php" class="menu-item"><span>㗊</span> Visão Geral</a>
             <a href="relatorios.php" class="menu-item"><span>⏱️</span> Relatórios</a>
             <a href="configuracoes.php" class="menu-item"><span>⚙️</span> Configurações</a>
         </nav>
@@ -28,7 +58,7 @@
                 <div class="avatar">A</div>
                 <div class="dados-usuario">
                     <strong>Admin</strong>
-                    <a href="login.php" class="link-sair">Sair</a>
+                    <!-- Como removemos o login, tirei o link que daria erro -->
                 </div>
             </div>
         </div>
@@ -39,22 +69,20 @@
         
         <header class="top-header">
             <h1>Adicionar Transação</h1>
-            <!-- Botão para cancelar e voltar para o painel sem salvar nada -->
-            <a href="index.php" class="btn-voltar">← Voltar</a>
+            <a href="relatorios.php" class="btn-voltar">← Voltar</a>
         </header>
 
         <!-- Formulário de Transação -->
         <div class="container-centralizado">
             <section class="painel-form">
                 
-                <form action="salvar_transacao.php" method="POST">
+                <!-- Action vazio faz o formulário enviar os dados para este mesmo arquivo -->
+                <form action="" method="POST">
                     
-                    <!-- A Descrição foi removida para simplificar! -->
-
                     <div class="row-inputs">
                         <div class="input-group">
                             <label for="valor">Valor (R$)</label>
-                            <input type="number" step="0.01" id="valor" name="valor" placeholder="0,00" required>
+                            <input type="number" step="0.01" id="valor" name="valor" placeholder="0.00" required>
                         </div>
 
                         <div class="input-group">
@@ -68,14 +96,14 @@
                             <label for="tipo">Tipo</label>
                             <select id="tipo" name="tipo" required>
                                 <option value="">Selecione...</option>
-                                <option value="Receita">Receita (Entrada)</option>
-                                <option value="Despesa">Despesa (Saída)</option>
+                                <!-- values em minúsculo para não quebrar a lógica de cores do relatório -->
+                                <option value="receita">Receita (Entrada)</option>
+                                <option value="despesa">Despesa (Saída)</option>
                             </select>
                         </div>
 
                         <div class="input-group">
                             <label for="categoria">Categoria</label>
-                            <!-- Transformamos em um select com categorias fixas -->
                             <select id="categoria" name="categoria" required>
                                 <option value="">Selecione uma categoria...</option>
                                 
