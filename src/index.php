@@ -1,74 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo ao Equilibra</title>
-    <style>
-        /* Estilos da Tela de Entrada */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    <title>Login - Equilibra</title>
+    
+    <link rel="stylesheet" href="style.css">
 
-        body {
-            /* Degradê moderno: Azul escuro para um verde água (focado em finanças) */
-           background: linear-gradient(135deg, #ffffff 0%, #4f46e5 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        .btn-entrar {
-            display: inline-block;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color:#4f46e5;
-            background-color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn-entrar:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
-            background-color: #f0f0f0;
-        }
-    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Equilibra</h1>
-        <p>Sua vida financeira em perfeita harmonia.</p>
-        
-        <a href="dashboard.php" class="btn-entrar">Acessar Meu Painel</a>
+    <div class="login-card">
+        <h1 class="titulo-logo">
+            <img src="logoEquilibra.PNG" alt="Logo Equilibra" class="logo-img">
+            Equilibra
+        </h1>
+        <p>Acesse sua conta para gerenciar suas finanças.</p>
+
+        <form action="login_backend.php" method="POST">
+            
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-entrar">Entrar</button>
+
+        </form>
+
+        <div class="link-cadastro">
+            Ainda não tem uma conta? <a href="cadastro.php">Crie agora</a>
+        </div>
     </div>
 
 </body>
