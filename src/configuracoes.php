@@ -16,7 +16,7 @@
         </div>
 
         <nav class="sidebar-menu">
-            <a href="index.php" class="menu-item"><span>㗊</span> Visão Geral</a>
+            <a href="dashboard.php" class="menu-item"><span>㗊</span> Visão Geral</a>
             <a href="relatorios.php" class="menu-item"><span>⏱️</span> Relatórios</a>
             <!-- Configurações ganha a classe 'ativo' -->
             <a href="configuracoes.php" class="menu-item ativo"><span>⚙️</span> Configurações</a>

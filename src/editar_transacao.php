@@ -1,3 +1,53 @@
+<?php
+session_start();
+require_once 'conecta.php';
+
+$id_logado = $_SESSION['usuario_id'];
+
+// ==========================================
+// 1. LÓGICA DE SALVAR A EDIÇÃO (UPDATE)
+// ==========================================
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $stmt = $pdo->prepare("
+            UPDATE transacoes 
+            SET valor = ?, tipo = ?, data_transacao = ?, categoria = ? 
+            WHERE id = ? AND usuario_id = ?
+        ");
+
+        $stmt->execute([
+            $_POST['valor'],
+            $_POST['tipo'],
+            $_POST['data'],
+            $_POST['categoria'],
+            $_POST['id_transacao'], // O ID escondido que vem do formulário
+            $id_logado
+        ]);
+
+        header("Location: relatorios.php?msg=editado");
+        exit;
+    } catch (Exception $e) {
+        header("Location: relatorios.php?msg=erro");
+        exit;
+    }
+}
+
+// ==========================================
+// 2. LÓGICA DE CARREGAR OS DADOS (SELECT)
+// ==========================================
+$id_da_url = $_GET['id']; // Pega o ID que veio na URL (ex: editar_transacao.php?id=5)
+
+$stmt = $pdo->prepare("SELECT * FROM transacoes WHERE id = ? AND usuario_id = ?");
+$stmt->execute([$id_da_url, $id_logado]);
+$t = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Se o usuário tentar editar uma transação que não existe ou não é dele, chuta de volta
+if (!$t) {
+    header("Location: relatorios.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,109 +58,61 @@
 </head>
 <body class="layout-dashboard">
 
-    <!-- BARRA LATERAL (SIDEBAR) -->
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <img src="logoEquilibra.PNG" alt="Logo Equilibra" class="logo-sidebar">
-            Equilibra
-        </div>
+    <main class="main-content" style="margin-left: 0; display: flex; justify-content: center; padding-top: 50px;">
+        <div style="background: #f8f9fa; padding: 40px; border-radius: 10px; width: 100%; max-width: 600px;">
+            
+            <h1 style="margin-bottom: 30px;">Editar Transação</h1>
 
-        <nav class="sidebar-menu">
-            <a href="index.php" class="menu-item"><span>㗊</span> Visão Geral</a>
-            <!-- Mantemos Relatórios ativo, pois o usuário veio de lá -->
-            <a href="relatorios.php" class="menu-item ativo"><span>⏱️</span> Relatórios</a>
-            <a href="configuracoes.php" class="menu-item"><span>⚙️</span> Configurações</a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <button class="btn-tema">🌙 Escuro</button>
-            <div class="usuario-info">
-                <div class="avatar">A</div>
-                <div class="dados-usuario">
-                    <strong>Admin</strong>
-                    <a href="login.php" class="link-sair">Sair</a>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-content">
-        
-        <header class="top-header">
-            <h1>Editar Transação</h1>
-            <!-- O botão de voltar agora leva de volta para os relatórios -->
-            <a href="relatorios.php" class="btn-voltar">← Voltar</a>
-        </header>
-
-        <div class="container-centralizado">
-            <section class="painel-form">
+            <form action="" method="POST" class="form-moderno">
                 
-                <!-- O action agora aponta para o script de atualizar -->
-                <form action="atualizar_transacao.php" method="POST">
-                    
-                    <!-- CAMPO OCULTO MUITO IMPORTANTE: O ID DA TRANSAÇÃO -->
-                    <!-- O PHP vai preencher o value com o ID correto para o banco de dados saber qual linha atualizar -->
-                    <input type="hidden" name="id" value="2"> 
+                <input type="hidden" name="id_transacao" value="<?= $t['id'] ?>">
 
-                    <div class="row-inputs">
-                        <div class="input-group">
-                            <label for="valor">Valor (R$)</label>
-                            <!-- O value="150.00" é um exemplo de como o PHP vai trazer o dado do banco -->
-                            <input type="number" step="0.01" id="valor" name="valor" value="150.00" required>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="data">Data</label>
-                            <!-- O value traz a data antiga -->
-                            <input type="date" id="data" name="data" value="2026-11-28" required>
-                        </div>
+                <div class="row-inputs" style="display: flex; gap: 20px; margin-bottom: 20px;">
+                    <div class="input-group" style="flex: 1;">
+                        <label>Valor (R$)</label>
+                        <input type="number" step="0.01" name="valor" value="<?= $t['valor'] ?>" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
                     </div>
 
-                    <div class="row-inputs">
-                        <div class="input-group">
-                            <label for="tipo">Tipo</label>
-                            <select id="tipo" name="tipo" required>
-                                <option value="">Selecione...</option>
-                                <option value="Receita">Receita (Entrada)</option>
-                                <!-- O PHP vai colocar a palavra 'selected' na opção que já estava salva -->
-                                <option value="Despesa" selected>Despesa (Saída)</option>
-                            </select>
-                        </div>
+                    <div class="input-group" style="flex: 1;">
+                        <label>Data</label>
+                        <input type="date" name="data" value="<?= $t['data_transacao'] ?>" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                    </div>
+                </div>
 
-                        <div class="input-group">
-                            <label for="categoria">Categoria</label>
-                            <select id="categoria" name="categoria" required>
-                                <option value="">Selecione uma categoria...</option>
-                                
-                                <optgroup label="Entradas (Receitas)">
-                                    <option value="Salário">Salário</option>
-                                    <option value="Freelance">Freelance</option>
-                                    <option value="Investimentos">Investimentos</option>
-                                    <option value="Outras Receitas">Outras Receitas</option>
-                                </optgroup>
-
-                                <optgroup label="Saídas (Despesas)">
-                                    <!-- O PHP vai colocar 'selected' na categoria antiga da pessoa -->
-                                    <option value="Moradia" selected>Moradia (Aluguel/Contas)</option>
-                                    <option value="Alimentação">Alimentação</option>
-                                    <option value="Transporte">Transporte</option>
-                                    <option value="Saúde">Saúde</option>
-                                    <option value="Educação">Educação</option>
-                                    <option value="Lazer">Lazer e Compras</option>
-                                    <option value="Outras Despesas">Outras Despesas</option>
-                                </optgroup>
-                            </select>
-                        </div>
+                <div class="row-inputs" style="display: flex; gap: 20px; margin-bottom: 30px;">
+                    <div class="input-group" style="flex: 1;">
+                        <label>Tipo</label>
+                        <select name="tipo" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="receita" <?= $t['tipo'] === 'receita' ? 'selected' : '' ?>>Receita (Entrada)</option>
+                            <option value="despesa" <?= $t['tipo'] === 'despesa' ? 'selected' : '' ?>>Despesa (Saída)</option>
+                        </select>
                     </div>
 
-                    <!-- O texto do botão muda para refletir a ação de edição -->
-                    <button type="submit" class="btn-primario btn-block">Atualizar Transação</button>
-                </form>
+                    <div class="input-group" style="flex: 1;">
+                        <label>Categoria</label>
+                        <select name="categoria" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                            <optgroup label="Entradas">
+                                <option value="Salário" <?= $t['categoria'] === 'Salário' ? 'selected' : '' ?>>Salário</option>
+                                <option value="Freelance" <?= $t['categoria'] === 'Freelance' ? 'selected' : '' ?>>Freelance</option>
+                                <option value="Investimentos" <?= $t['categoria'] === 'Investimentos' ? 'selected' : '' ?>>Investimentos</option>
+                            </optgroup>
+                            <optgroup label="Saídas">
+                                <option value="Moradia" <?= $t['categoria'] === 'Moradia' ? 'selected' : '' ?>>Moradia (Aluguel)</option>
+                                <option value="Contas" <?= $t['categoria'] === 'Contas' ? 'selected' : '' ?>>Contas</option>
+                                <option value="Alimentação" <?= $t['categoria'] === 'Alimentação' ? 'selected' : '' ?>>Alimentação</option>
+                                <option value="Lazer" <?= $t['categoria'] === 'Lazer' ? 'selected' : '' ?>>Lazer e Compras</option>
+                                </optgroup>
+                        </select>
+                    </div>
+                </div>
 
-            </section>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn-primario" style="flex: 1; padding: 15px; background: #5a4fcf; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Atualizar Transação</button>
+                    <a href="relatorios.php" style="padding: 15px; background: #ccc; color: #333; text-decoration: none; border-radius: 5px; font-weight: bold; text-align: center;">Cancelar</a>
+                </div>
+            </form>
         </div>
-
     </main>
+
 </body>
 </html>

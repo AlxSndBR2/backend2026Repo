@@ -1,3 +1,24 @@
+<?php
+session_start();
+require_once 'conecta.php';
+
+// Pega direto da sessão, sem rodeios
+$id_logado = $_SESSION['usuario_id'];
+
+// Soma das Receitas
+$sql_receita = $pdo->prepare("SELECT SUM(valor) as total FROM transacoes WHERE tipo = 'receita' AND usuario_id = ?");
+$sql_receita->execute([$id_logado]);
+$receitas = $sql_receita->fetch()['total'] ?? 0;
+
+// Soma das Despesas
+$sql_despesa = $pdo->prepare("SELECT SUM(valor) as total FROM transacoes WHERE tipo = 'despesa' AND usuario_id = ?");
+$sql_despesa->execute([$id_logado]);
+$despesas = $sql_despesa->fetch()['total'] ?? 0;
+
+$saldo = $receitas - $despesas;
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -42,61 +63,20 @@
         </header>
 
         <section class="cards-resumo">
-            <div class="card">
-                <div class="card-titulo">Entradas <span class="icone-verde">↑</span></div>
-                <div class="card-valor valor-verde">R$ 11.200,00</div>
-            </div>
-            <div class="card">
-                <div class="card-titulo">Saídas <span class="icone-vermelho">↓</span></div>
-                <div class="card-valor valor-vermelho">R$ 10.357,00</div>
-            </div>
-            <div class="card">
-                <div class="card-titulo">Saldo Total <span class="icone-cinza">$</span></div>
-                <div class="card-valor valor-neutro">R$ 843,00</div>
-            </div>
-        </section>
+            <div class="card-valor">
+    <span class="titulo-card">Entradas</span>
+    <h2 style="color: #28a745;">R$ <?= number_format($receitas, 2, ',', '.') ?></h2>
+</div>
 
-        <section class="secao-transacoes">
-            <h3 class="titulo-secao">Últimas Transações</h3>
-            
-            <div class="lista-transacoes">
-                
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <strong>Freelance</strong>
-                        <span>2025-11-30</span>
-                    </div>
-                    <div class="info-direita">
-                        <span class="valor-verde">+ R$ 200,00</span>
-                        <a href="#" class="btn-lixeira">🗑️</a>
-                    </div>
-                </div>
+<div class="card-valor">
+    <span class="titulo-card">Saídas</span>
+    <h2 style="color: #dc3545;">R$ <?= number_format($despesas, 2, ',', '.') ?></h2>
+</div>
 
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <strong>Outras Despesas</strong>
-                        <span>2025-11-28</span>
-                    </div>
-                    <div class="info-direita">
-                        <span class="valor-vermelho">- R$ 7.000,00</span>
-                        <a href="#" class="btn-lixeira">🗑️</a>
-                    </div>
-                </div>
-
-                <div class="item-transacao">
-                    <div class="info-esquerda">
-                        <strong>Compras</strong>
-                        <span>2025-11-27</span>
-                    </div>
-                    <div class="info-direita">
-                        <span class="valor-vermelho">- R$ 150,00</span>
-                        <a href="#" class="btn-lixeira">🗑️</a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
+<div class="card-valor">
+    <span class="titulo-card">Saldo Total</span>
+    <h2 style="color: #333;">R$ <?= number_format($saldo, 2, ',', '.') ?></h2>
+</div>
     </main>
 </body>
 </html>

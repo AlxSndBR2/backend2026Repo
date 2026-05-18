@@ -1,3 +1,35 @@
+<?php
+// Inicia a sessão para o sistema "lembrar" quem está logado
+session_start();
+require_once 'conecta.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $senha_digitada = $_POST['senha'];
+
+    // Busca o usuário pelo email
+    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
+    $stmt->execute([$email]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // password_verify compara a senha digitada com a senha criptografada do banco
+    if ($usuario && password_verify($senha_digitada, $usuario['senha'])) {
+        
+        // Login com sucesso! Guarda as informações na sessão
+        $_SESSION['usuario_id'] = $usuario['id'];
+        $_SESSION['usuario_nome'] = $usuario['nome'];
+        
+        // Joga para a tela principal
+        header("Location: dashboard.php");
+        exit;
+    } else {
+        // E-mail ou senha incorretos
+        header("Location: login.php?msg=credenciais_invalidas");
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -17,7 +49,7 @@
         </h1>
         <p>Acesse sua conta para gerenciar suas finanças.</p>
 
-        <form action="login_backend.php" method="POST">
+        <form action="" method="POST">
             
             <div class="input-group">
                 <label for="email">E-mail</label>

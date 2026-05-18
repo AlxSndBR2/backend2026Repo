@@ -1,3 +1,27 @@
+<?php
+require_once 'conecta.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        // Criptografa a senha antes de salvar no banco
+        $senha_segura = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+
+        $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
+        $stmt->execute([$nome, $email, $senha_segura]);
+
+        // Redireciona para o login com sucesso
+        header("Location: index.php?msg=cadastro_sucesso");
+        exit;
+    } catch (Exception $e) {
+        // O erro mais comum aqui é tentar cadastrar um email que já existe
+        header("Location: cadastro.php?msg=erro");
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -19,7 +43,7 @@
         <p>Crie sua conta para gerenciar suas finanças.</p>
 
         <!-- O formulário aponta para o arquivo que os meninos do PHP vão criar -->
-        <form action="salvar_usuario.php" method="POST">
+        <form action="" method="POST">
             
             <div class="input-group">
                 <label for="nome">Nome Completo</label>

@@ -1,34 +1,36 @@
 <?php
+session_start();
 require_once 'conecta.php';
 
-// Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        // Usa a sessão direto na hora de salvar
+        $id_logado = $_SESSION['usuario_id'];
+
         $stmt = $pdo->prepare("
             INSERT INTO transacoes 
-            (valor, tipo, data_transacao, categoria) 
-            VALUES (?, ?, ?, ?)
+            (usuario_id, valor, tipo, data_transacao, categoria) 
+            VALUES (?, ?, ?, ?, ?)
         ");
 
-        // Executa pegando os names EXATOS dos seus inputs
         $stmt->execute([
+            $id_logado, 
             $_POST['valor'],
             $_POST['tipo'],
-            $_POST['data'],       // Pega do seu input name="data"
-            $_POST['categoria']   // Pega do seu novo select de categorias
+            $_POST['data'],
+            $_POST['categoria']
         ]);
 
-        // Redireciona para os relatórios com a mensagem de sucesso
         header("Location: relatorios.php?msg=sucesso");
         exit;
 
     } catch (Exception $e) {
-        // Se algo der errado no banco, redireciona com erro
         header("Location: relatorios.php?msg=erro");
         exit;
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

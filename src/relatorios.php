@@ -1,8 +1,14 @@
 <?php
+session_start();
 require_once 'conecta.php';
 
-// Busca todas as transações da mais recente para a mais antiga
-$transacoes = $pdo->query("SELECT * FROM transacoes ORDER BY data_transacao DESC")->fetchAll();
+// Pega direto da sessão
+$id_logado = $_SESSION['usuario_id'];
+
+// Busca as transações do usuário logado
+$stmt = $pdo->prepare("SELECT * FROM transacoes WHERE usuario_id = ? ORDER BY data_transacao DESC");
+$stmt->execute([$id_logado]);
+$transacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Sistema de Mensagens do Professor
 $status = $_GET['msg'] ?? '';
