@@ -43,12 +43,10 @@ $saldo = $receitas - $despesas;
         </nav>
 
         <div class="sidebar-footer">
-            <button class="btn-tema">🌙 Escuro</button>
             <div class="usuario-info">
-                <div class="avatar">A</div>
+                <div class="avatar"></div>
                 <div class="dados-usuario">
                     <strong>Admin</strong>
-                    <a href="login.php" class="link-sair">Sair</a>
                 </div>
             </div>
         </div>
