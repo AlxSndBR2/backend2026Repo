@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <nav class="sidebar-menu">
             <a href="dashboard.php" class="menu-item"><span>㗊</span> Visão Geral</a>
             <a href="relatorios.php" class="menu-item"><span>⏱️</span> Relatórios</a>
-
         </nav>
 
         <div class="sidebar-footer">

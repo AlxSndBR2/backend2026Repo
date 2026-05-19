@@ -39,7 +39,6 @@ $saldo = $receitas - $despesas;
             <!-- Visão Geral ganha a classe 'ativo' -->
             <a href="index.php" class="menu-item ativo"><span>㗊</span> Visão Geral</a>
             <a href="relatorios.php" class="menu-item"><span>⏱️</span> Relatórios</a>
-            <a href="configuracoes.php" class="menu-item"><span>⚙️</span> Configurações</a>
         </nav>
         </nav>
 
