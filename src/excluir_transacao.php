@@ -2,7 +2,7 @@
 require_once 'conecta.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // O ID vem escondido pelo formulário que o Alex já fez no front
+    // O ID vem escondido pelo formulário no front
     $id = $_POST['id'];
 
     $stmt = $pdo->prepare("DELETE FROM transacoes WHERE id = ?");
