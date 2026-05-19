@@ -54,15 +54,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </nav>
 
         <div class="sidebar-footer">
-            <button class="btn-tema">🌙 Escuro</button>
-            <div class="usuario-info">
-                <div class="avatar">A</div>
-                <div class="dados-usuario">
-                    <strong>Admin</strong>
-                    <!-- Como removemos o login, tirei o link que daria erro -->
-                </div>
-            </div>
+    
+    <div class="usuario-info" style="display: flex; align-items: center; gap: 12px; padding: 15px 10px;">
+        
+        <div class="avatar" style="background-color: #cce0ff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5a4fcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            
         </div>
+        
+        <div class="dados-usuario" style="display: flex; flex-direction: column;">
+            
+            <strong style="color: #000; font-size: 15px;">
+                <?= htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário') ?>
+            </strong>
+        </div>
+        
+    </div>
+    
+</div>
     </aside>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -97,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label for="tipo">Tipo</label>
                             <select id="tipo" name="tipo" required>
                                 <option value="">Selecione...</option>
-                                <!-- values em minúsculo para não quebrar a lógica de cores do relatório -->
                                 <option value="receita">Receita (Entrada)</option>
                                 <option value="despesa">Despesa (Saída)</option>
                             </select>

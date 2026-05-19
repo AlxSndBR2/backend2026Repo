@@ -1,5 +1,5 @@
 <?php
-// Inicia a sessão para o sistema "lembrar" quem está logado
+// Inicia a sessão para o sistema lembrar quem está logado
 session_start();
 require_once 'conecta.php';
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // E-mail ou senha incorretos
-        header("Location: login.php?msg=credenciais_invalidas");
+        header("Location: index.php?msg=credenciais_invalidas");
         exit;
     }
 }

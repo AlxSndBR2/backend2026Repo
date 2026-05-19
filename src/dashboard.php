@@ -2,7 +2,7 @@
 session_start();
 require_once 'conecta.php';
 
-// Pega direto da sessão, sem rodeios
+// Pega direto da sessão
 $id_logado = $_SESSION['usuario_id'];
 
 // Soma das Receitas
@@ -37,7 +37,7 @@ $saldo = $receitas - $despesas;
 
         <nav class="sidebar-menu">
             <!-- Visão Geral ganha a classe 'ativo' -->
-            <a href="index.php" class="menu-item ativo"><span>㗊</span> Visão Geral</a>
+            <a class="menu-item ativo"><span>㗊</span> Visão Geral</a>
             <a href="relatorios.php" class="menu-item"><span>⏱️</span> Relatórios</a>
         </nav>
         </nav>

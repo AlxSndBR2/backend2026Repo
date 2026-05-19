@@ -39,7 +39,6 @@ $mensagens = [
 
         <nav class="sidebar-menu">
             <a href="dashboard.php" class="menu-item"><span>㗊</span> Visão Geral</a>
-            <!-- Relatórios ganha a classe 'ativo' -->
             <a href="relatorios.php" class="menu-item ativo"><span>⏱️</span> Relatórios</a>
         
         </nav>
@@ -80,7 +79,7 @@ $mensagens = [
         <!-- Painel da Tabela -->
         <section class="painel-relatorios">
 
-            <!-- ALERTA DE MENSAGENS (Lógica do professor com estilo inline básico para garantir que apareça) -->
+            <!-- ALERTA DE MENSAGENS -->
             <?php if ($status && isset($mensagens[$status])): ?>
                 <div class="alert <?= $status === 'erro' ? 'error' : 'success' ?>" 
                      style="margin-bottom: 20px; padding: 15px; border-radius: 8px; font-weight: bold; text-align: center;
@@ -130,9 +129,9 @@ $mensagens = [
                                     <!-- Botão de Editar pegando o ID dinâmico -->
                                     <a href="editar_transacao.php?id=<?= $t['id'] ?>" class="btn-acao btn-editar">✏️ Editar</a>
                                     
-                                    <!-- Formulário de Excluir do professor, adaptado com o seu botão -->
+                                    <!-- Formulário de Excluir do professor, adaptado com o botão -->
                                     <form action="excluir_transacao.php" method="POST" class="form-excluir" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir esta transação?')">
-                                        <!-- O input hidden é um truque para enviar o ID sem bagunçar o CSS do seu botão -->
+                                        <!-- O input hidden é um truque para enviar o ID sem bagunçar o CSS do botão -->
                                         <input type="hidden" name="id" value="<?= $t['id'] ?>">
                                         <button type="submit" class="btn-acao btn-excluir">🗑️ Excluir</button>
                                     </form>

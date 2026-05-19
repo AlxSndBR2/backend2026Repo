@@ -4,9 +4,9 @@ require_once 'conecta.php';
 
 $id_logado = $_SESSION['usuario_id'];
 
-// ==========================================
+
 // 1. LÓGICA DE SALVAR A EDIÇÃO (UPDATE)
-// ==========================================
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $stmt = $pdo->prepare("
@@ -32,16 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// ==========================================
+
 // 2. LÓGICA DE CARREGAR OS DADOS (SELECT)
-// ==========================================
+
 $id_da_url = $_GET['id']; // Pega o ID que veio na URL (ex: editar_transacao.php?id=5)
 
 $stmt = $pdo->prepare("SELECT * FROM transacoes WHERE id = ? AND usuario_id = ?");
 $stmt->execute([$id_da_url, $id_logado]);
 $t = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Se o usuário tentar editar uma transação que não existe ou não é dele, chuta de volta
+// Se o usuário tentar editar uma transação que não existe ou não é dele, manda de volta
 if (!$t) {
     header("Location: relatorios.php");
     exit;
