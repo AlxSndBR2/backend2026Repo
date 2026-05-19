@@ -41,14 +41,14 @@ $mensagens = [
             <a href="dashboard.php" class="menu-item"><span>㗊</span> Visão Geral</a>
             <!-- Relatórios ganha a classe 'ativo' -->
             <a href="relatorios.php" class="menu-item ativo"><span>⏱️</span> Relatórios</a>
-            <a href="configuracoes.php" class="menu-item"><span>⚙️</span> Configurações</a>
+        
         </nav>
 
         <div class="sidebar-footer">
             <button class="btn-tema">🌙 Escuro</button>
             <div class="usuario-info">
                 <div class="avatar">A</div>
-                <div class="dados-usuario">
+                <div class="dados-usuario"> 
                     <strong>Admin</strong>
                     <!-- Retirei o botão de Sair daqui, já que removemos o sistema de login -->
                 </div>
