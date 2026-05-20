@@ -7,6 +7,7 @@ CREATE TABLE usuarios (
 
 CREATE TABLE transacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
     valor DECIMAL(10,2) NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     data_transacao DATE NOT NULL,
