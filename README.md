@@ -47,3 +47,18 @@ Antes de iniciar o servidor, a estrutura do banco precisa ser criada:
 2. Inicie o servidor embutido do PHP executando o seguinte comando:
    ```bash
    php -S 0.0.0.0:8080
+
+---
+
+## 👥 Equipe / Desenvolvedores
+
+Projeto desenvolvido pelos alunos do curso de Análise e Desenvolvimento de Sistemas:
+
+- **Alexsandro Siciliani Augusto** 
+- **Kaue Correia de Lima**
+- **Nathan da Silva Oliveira** 
+- **Caroline Gonçalves da Silva**
+- **Fabrício dos Santos Guedes**
+- **Hugo Tadeu Oliveira Santos**
+- **Stephanie Dalcorso Rocha Silva**
+- **Melissa da Silva Graciano**
